@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPK - Магазин игровой периферии</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>MPK - Магазин игровой периферии</h1>
+    <div class="nav">
+        <button onclick="showCatalog()">Каталог</button>
+        <button onclick="showCart()">Корзина</button>
+    </div>
+    <div class="grid" id="products"></div>
+    <div class="cart" id="cart-section">
+        <h2>Корзина MPK</h2>
+        <ul id="cart-list"></ul>
+        <p>Итоговая сумма: <span id="total">0</span> грн</p>
+        <button onclick="clearCart()">Очистить корзину</button>
+    </div>
+    <div class="details" id="details-section"></div>
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: 'Клавиатура HyperX Alloy Origins',
+                price: 2999,
+                image: 'images/hyperx.jpg',
+                description: 'Механическая клавиатура с RGB-подсветкой.',
+                reviews: '★★★★★ Отличная клавиатура!',
+                specs: [
+                    { key: 'Переключатели', value: 'Механические HyperX' },
+                    { key: 'Материал корпуса', value: 'Алюминий' },
+                    { key: 'Подсветка', value: 'RGB с динамическими эффектами' },
+                    { key: 'Съемный кабель', value: 'USB-C' },
+                    { key: 'Совместимость', value: 'Windows 7, 8, 8.1, 10' }
+                ]
+            },
+            {
+                id: 2,
+                name: 'Мышь Logitech G102 Lightsync',
+                price: 2499,
+                image: 'images/logitech.jpg',
+                description: 'Игровая мышь с высокой точностью и подсветкой.',
+                reviews: '★★★★☆ Хорошая, но могла быть удобнее.',
+                specs: [
+                    { key: 'DPI', value: '200–8000' },
+                    { key: 'Частота опроса', value: '1000 Гц' },
+                    { key: 'Время отклика', value: '1 мс' },
+                    { key: 'Количество кнопок', value: '6' },
+                    { key: 'Подсветка', value: 'RGB' }
+                ]
+            },
+            {
+                id: 3,
+                name: 'Наушники Razer',
+                price: 3499,
+                image: 'images/razer.jpg',
+                description: 'Качественные игровые наушники с объёмным звуком.',
+                reviews: '★★★★★ Лучшая покупка для геймеров!',
+                specs: [
+                    { key: 'Тип', value: 'Игровые наушники' },
+                    { key: 'Звук', value: 'Объёмный' },
+                    { key: 'Подключение', value: 'Проводное' },
+                    { key: 'Микрофон', value: 'Встроенный' }
+                ]
+            }
+        ];
+
+        const productContainer = document.getElementById('products');
+        const cartList = document.getElementById('cart-list');
+        const totalElement = document.getElementById('total');
+        const cartSection = document.getElementById('cart-section');
+        const detailsSection = document.getElementById('details-section');
+        let cart = [];
+
+        function updateCart() {
+            cartList.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - ${item.price} грн`;
+                cartList.appendChild(li);
+                total += item.price;
+            });
+            totalElement.textContent = total;
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            cart.push(product);
+            updateCart();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCart();
+        }
+
+        function showCatalog() {
+            productContainer.style.display = 'grid';
+            cartSection.style.display = 'none';
+            detailsSection.style.display = 'none';
+        }
+
+        function showCart() {
+            productContainer.style.display = 'none';
+            cartSection.style.display = 'block';
+            detailsSection.style.display = 'none';
+        }
+
+        function showDetails(id) {
+            const product = products.find(p => p.id === id);
+            detailsSection.innerHTML = `
+                <h2>${product.name}</h2>
+                <img src="${product.image}" alt="${product.name}" style="width: 100%; max-width: 300px; border-radius: 10px;">
+                <p>${product.description}</p>
+                <table>
+                    <tbody>
+                        ${product.specs.map(spec => `<tr><td><strong>${spec.key}:</strong></td><td>${spec.value}</td></tr>`).join('')}
+                    </tbody>
+                </table>
+                <p><strong>Цена: ${product.price} грн</strong></p>
+                <p><strong>Отзывы:</strong> ${product.reviews}</p>
+                <button onclick="addToCart(${product.id})">Добавить в корзину</button>
+                <button onclick="showCatalog()">Назад</button>
+            `;
+            detailsSection.style.display = 'block';
+            productContainer.style.display = 'none';
+            cartSection.style.display = 'none';
+        }
+
+        products.forEach(product => {
+            const div = document.createElement('div');
+            div.className = 'product';
+            div.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" onclick="showDetails(${product.id})">
+                <h3>${product.name}</h3>
+                <p>${product.price} грн</p>
+                <button onclick="addToCart(${product.id})">Добавить в корзину</button>
+            `;
+            productContainer.appendChild(div);
+        });
+    </script>
+</body>
+</html>

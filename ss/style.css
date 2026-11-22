@@ -1,0 +1,142 @@
+/* Основные стили */
+body { 
+    font-family: Arial, sans-serif; 
+    padding: 20px; 
+    background-color: #1e272e; 
+    color: white; 
+    margin: 0;
+}
+
+/* Навигация */
+.nav { 
+    display: flex; 
+    gap: 20px; 
+    margin-bottom: 20px; 
+    justify-content: center; 
+}
+
+.nav button, .product button { 
+    padding: 12px 20px; 
+    border: none; 
+    cursor: pointer; 
+    background: #27ae60; 
+    color: white; 
+    font-weight: bold; 
+    border-radius: 8px; 
+    transition: 0.3s; 
+    font-size: 18px; 
+}
+
+.nav button:hover, .product button:hover { 
+    background: #2ecc71; 
+}
+
+/* Сетка товаров */
+.grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px; 
+}
+
+/* Стили для товаров */
+.product { 
+    border: none; 
+    padding: 15px; 
+    border-radius: 15px; 
+    text-align: center; 
+    background: #34495e; 
+    color: white; 
+    transition: 0.3s; 
+    cursor: pointer; 
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.3); 
+}
+
+.product:hover { 
+    transform: scale(1.05); 
+}
+
+.product img { 
+    width: 100%; 
+    height: 180px; 
+    object-fit: cover; 
+    border-radius: 10px; 
+}
+
+/* Корзина и детали товаров */
+.cart, .details { 
+    display: none; 
+    padding: 20px; 
+    background: white; 
+    color: black; 
+    border-radius: 10px; 
+}
+
+.cart h2, .details h2 { 
+    color: #27ae60; 
+}
+
+/* Заголовок */
+h1 { 
+    text-align: center; 
+    font-size: 32px; 
+    font-weight: bold; 
+}
+
+/* Стили для таблиц характеристик */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #2c3e50;
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table, th, td {
+    border: 1px solid #34495e;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: #27ae60;
+    color: white;
+}
+
+td {
+    background: #34495e;
+}
+
+/* Мобила */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .nav {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .nav button, .product button {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .product {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product img {
+        max-width: 100%;
+        height: auto;
+    }
+}
